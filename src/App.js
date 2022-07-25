@@ -81,13 +81,28 @@ class App extends React.Component {
 
   }
 
+  //save the user’s playlist to their account.
+  savePlaylist = () => {
+    let trackURIs = this.state.playlistTracks.map(track => track.uri);
+    alert("it is working")
+    // this.setState({
+    //   playlistTracks: []
+    // })
+
+
+  }
+
+  search = (term) => {
+    console.log("serach team")
+
+  }
+
   render() {
     return (
       <div>
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
         <div className="App">
-          {/* Pass .addTrack() as an onAdd attribute. */}
-          <SearchBar />
+          <SearchBar onSearch={this.search} />
           <div className="App-playlist">
             {/* Pass the state of the App component’s searchResults */}
             <SearchResults
@@ -99,6 +114,7 @@ class App extends React.Component {
               playlistTracks={this.state.playlistTracks}
               onRemove={this.removeTrack}
               onNameChange={this.updatePlaylistName}
+              onSave={this.savePlaylist}
             />
           </div>
         </div>
