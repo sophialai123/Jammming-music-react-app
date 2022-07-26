@@ -3,6 +3,7 @@ import SearchResults from './components/SearchResults/SearchResults';
 import './App.css';
 import Playlist from './components/PlayList/Playlist';
 import React from 'react';
+import Spotify from './util/Spotify';
 
 
 class App extends React.Component {
@@ -93,7 +94,12 @@ class App extends React.Component {
   }
 
   search = (term) => {
-    console.log("serach team")
+    //update to Spotify.search() method, is a promise
+    Spotify.search(term).then(searchResults => {
+      //Update the state of searchResults with the value 
+      //resolved from Spotify.search()‘s promise.
+      this.setState({ searchResults: searchResults })
+    })
 
   }
 
