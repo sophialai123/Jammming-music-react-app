@@ -12,45 +12,9 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      searchResults: [
-        {
-          id: 1,
-          name: "name1",
-          artist: "artist1",
-          album: "album1"
-        },
-        {
-          id: 2,
-          name: "name2",
-          artist: "artist2",
-          album: "album2"
-        },
-        {
-          id: 3,
-          name: "name3",
-          artist: "artist3",
-          album: "album3"
-        }
-      ],
-      playlistName: 'My listName',
-      playlistTracks: [{
-        id: 4,
-        name: "playlistname1",
-        artist: "playlistartist1",
-        album: "playlistalbum1"
-      },
-      {
-        id: 5,
-        name: "playlistname2",
-        artist: "playlistartist2",
-        album: "playlistalbum2"
-      },
-      {
-        id: 6,
-        name: "playlistname3",
-        artist: "playlistartist3",
-        album: "playlistalbum3"
-      }]
+      searchResults: [],
+      playlistName: 'My Playlist',
+      playlistTracks: []
     }
   }
 
@@ -85,11 +49,13 @@ class App extends React.Component {
   //save the user’s playlist to their account.
   savePlaylist = () => {
     let trackURIs = this.state.playlistTracks.map(track => track.uri);
-    alert("it is working")
-    // this.setState({
-    //   playlistTracks: []
-    // })
-
+    Spotify.savePlaylist(this.state.playlistName, trackURIs)
+      .then(() => {
+        this.setState({
+          playlistName: "New Playlist",
+          playlistTracks: []
+        })
+      })
 
   }
 
@@ -99,7 +65,10 @@ class App extends React.Component {
       //Update the state of searchResults with the value 
       //resolved from Spotify.search()‘s promise.
       this.setState({ searchResults: searchResults })
+      console.log(" search for ");
+
     })
+
 
   }
 
@@ -133,3 +102,41 @@ class App extends React.Component {
 
 export default App;
 
+
+/* 
+{
+  id: 1,
+    name: "name1",
+      artist: "artist1",
+        album: "album1"
+},
+{
+  id: 2,
+    name: "name2",
+      artist: "artist2",
+        album: "album2"
+},
+{
+  id: 3,
+    name: "name3",
+      artist: "artist3",
+        album: "album3"
+},
+{
+  id: 4,
+    name: "playlistname1",
+      artist: "playlistartist1",
+        album: "playlistalbum1"
+},
+{
+  id: 5,
+    name: "playlistname2",
+      artist: "playlistartist2",
+        album: "playlistalbum2"
+},
+{
+  id: 6,
+    name: "playlistname3",
+      artist: "playlistartist3",
+        album: "playlistalbum3"
+} */
