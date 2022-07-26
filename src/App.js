@@ -10,16 +10,44 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
       searchResults: [],
       playlistName: 'My Playlist',
       playlistTracks: []
     }
+
+    this.search = this.search.bind(this);
+    this.addTrack = this.addTrack.bind(this);
+    this.removeTrack = this.removeTrack.bind(this);
+    this.updatePlaylistName = this.updatePlaylistName.bind(this);
+    this.savePlaylist = this.savePlaylist.bind(this);
+  }
+
+
+  // search(term) {
+  //   
+
+  //   Spotify.search(term).then(searchResults => {
+  //     //Update the state of searchResults with the value 
+  //     //resolved from Spotify.search()‘s promise.
+  //     this.setState({ searchResults: searchResults })
+  //     console.log(" search for ");
+
+  //   });
+
+  // }
+
+
+  //update to Spotify.search() method, is a promise
+  search(term) {
+
+    Spotify.search(term).then(searchResults => {
+      this.setState({ searchResults: searchResults });
+    });
   }
 
   //adds a song to the playlist state
-  addTrack = (track) => {
+  addTrack(track) {
     let tracks = this.state.playlistTracks;
     //to check if the track already exists in the playlist
     if (tracks.find((savedTrack) => savedTrack.id === track.id)) {
@@ -32,14 +60,14 @@ class App extends React.Component {
   }
 
   //no need to bind use Arrow function
-  removeTrack = (track) => {
+  removeTrack(track) {
     let tracks = this.state.playlistTracks;
     tracks = tracks.filter((currentTrack) => currentTrack.id !== track.id)
     this.setState({ playlistTracks: tracks })
   }
 
   //allows a user to change the name of their playlist
-  updatePlaylistName = (name) => {
+  updatePlaylistName(name) {
     this.setState({
       playlistName: name
     })
@@ -47,30 +75,30 @@ class App extends React.Component {
   }
 
   //save the user’s playlist to their account.
-  savePlaylist = () => {
-    let trackURIs = this.state.playlistTracks.map(track => track.uri);
-    Spotify.savePlaylist(this.state.playlistName, trackURIs)
-      .then(() => {
-        this.setState({
-          playlistName: "New Playlist",
-          playlistTracks: []
-        })
-      })
+  // savePlaylist() {
+  //   let trackURIs = this.state.playlistTracks.map(track => track.uri);
 
+  //   Spotify.savePlaylist(this.state.playlistName, trackURIs)
+  //     .then(() => {
+  //       this.setState({
+  //         playlistName: "New Playlist",
+  //         playlistTracks: []
+  //       });
+  //     });
+
+  // }
+
+  savePlaylist() {
+    const trackUris = this.state.playlistTracks.map(track => track.uri);
+    Spotify.savePlaylist(this.state.playlistName, trackUris).then(() => {
+      this.setState({
+        playlistName: 'New Playlist',
+        playlistTracks: []
+      });
+    });
   }
 
-  search = (term) => {
-    //update to Spotify.search() method, is a promise
-    Spotify.search(term).then(searchResults => {
-      //Update the state of searchResults with the value 
-      //resolved from Spotify.search()‘s promise.
-      this.setState({ searchResults: searchResults })
-      console.log(" search for ");
 
-    })
-
-
-  }
 
   render() {
     return (
