@@ -2,7 +2,9 @@
 //create a Spotify module  to get a user’s access 
 //token so that they can make requests to the Spotify API.
 
-import clientId from "./clientId";
+// import clientId from "./clientId";
+
+const clientId = 'dfb0a2650c7842989b784a677d66139e';
 
 const redirectUri = 'http://localhost:3000/'; // Have to add this to your accepted Spotify redirect URIs on the Spotify API.
 let accessToken;
